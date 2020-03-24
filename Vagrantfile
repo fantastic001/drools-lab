@@ -65,6 +65,8 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     pacman -Syy 
+    pacman -Syu --noconfirm
+    pacman -S --noconfirm archlinux-keyring
     pacman -S --noconfirm docker 
     systemctl start docker
     systemctl enable docker
