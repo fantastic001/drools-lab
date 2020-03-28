@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<kmodule xmlns="http://jboss.org/kie/6.2.0/kmodule">
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
    <kbase name="rules" packages="rules" default="true">
         <ksession name="ksession-rule" default="true"/>
     </kbase>
