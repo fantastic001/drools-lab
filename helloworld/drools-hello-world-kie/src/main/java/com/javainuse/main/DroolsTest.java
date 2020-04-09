@@ -17,6 +17,7 @@ public class DroolsTest {
 			KieContainer kContainer = ks.getKieClasspathContainer();
 			System.out.println("Creating session....");
 			KieSession kSession = kContainer.newKieSession("ksession-rule");
+			kSession.setGlobal("logger", new Logger());
 			System.out.println("Creating product....");
 
 			Product product = new Product();

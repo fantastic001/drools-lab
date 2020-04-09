@@ -1,6 +1,10 @@
 package rules
  
 import com.javainuse.model.Product
+import com.javainuse.main.Logger
+
+global Logger logger;
+
 rule "Offer for Diamond"
 	when 
 		productObject: Product(type=="diamond")
@@ -12,4 +16,5 @@ rule "Offer for Gold"
 		productObject: Product(type=="gold")
 	then
 		productObject.setDiscount(25);
+		logger.log("AAA");
 	end
