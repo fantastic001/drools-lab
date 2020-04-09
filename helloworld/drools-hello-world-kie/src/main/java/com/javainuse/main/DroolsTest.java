@@ -5,7 +5,9 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
-import com.javainuse.model.Product;
+import java.util.ArrayList;
+
+import com.javainuse.model.*;
 
 public class DroolsTest {
 
@@ -21,17 +23,22 @@ public class DroolsTest {
 			System.out.println("Creating product....");
 
 			Product product = new Product();
-			product.setType("gold");
+			product.setType("pizza");
+			product.setPrice(10);
+			ArrayList<OrderedProduct> items = new ArrayList<OrderedProduct> ();
+			OrderedProduct orderedProduct = new OrderedProduct(1, product);
+			items.add(orderedProduct);
+			Order order = new Order(items);
 
 			FactHandle fact1;
 			System.out.println("Inserting object into session");
 			if (kSession == null) System.out.println("kSession is null!");
-			fact1 = kSession.insert(product);
+			fact1 = kSession.insert(orderedProduct);
+			fact1 = kSession.insert(order);
+
 			System.out.println("Firing rules");
 			kSession.fireAllRules();
 
-			System.out.println("The discount for the jewellery product "
-					+ product.getType() + " is " + product.getDiscount());
 
 		} catch (Throwable t) {
 			t.printStackTrace();

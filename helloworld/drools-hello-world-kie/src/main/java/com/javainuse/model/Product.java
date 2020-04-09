@@ -3,7 +3,7 @@ package com.javainuse.model;
 public class Product {
 
 	private String type;
-	private int discount;
+	private double price;
 
 	public String getType() {
 		return type;
@@ -13,12 +13,12 @@ public class Product {
 		this.type = type;
 	}
 
-	public int getDiscount() {
-		return discount;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setDiscount(int discount) {
-		this.discount = discount;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

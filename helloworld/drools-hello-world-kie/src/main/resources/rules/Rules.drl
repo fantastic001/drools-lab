@@ -1,20 +1,24 @@
 package rules
  
 import com.javainuse.model.Product
+import com.javainuse.model.OrderedProduct
+import com.javainuse.model.Order
+
 import com.javainuse.main.Logger
 
 global Logger logger;
 
-rule "Offer for Diamond"
+rule "Offer for orders with total amount more than $10"
 	when 
-		productObject: Product(type=="diamond")
+		$o : Order()
+		$total : Number(doubleValue > 10) from 
+		accumulate(OrderedProduct(order == $o, $p : product, $a : amount),
+			init(double total = 0;),
+			action(total += $a * $p.getPrice();),
+			reverse(total -= $a * $p.getPrice();),
+			result(total )
+		)
 	then
-		productObject.setDiscount(15);
-	end
-rule "Offer for Gold"
-	when 
-		productObject: Product(type=="gold")
-	then
-		productObject.setDiscount(25);
-		logger.log("AAA");
+		//$o.setDiscount(0.9);
+		logger.log("getting discount");
 	end
