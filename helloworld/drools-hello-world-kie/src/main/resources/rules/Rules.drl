@@ -22,3 +22,14 @@ rule "Offer for orders with total amount more than $10"
 		//$o.setDiscount(0.9);
 		logger.log("getting discount");
 	end
+
+rule "Change prices of all products above certain price"
+	when 
+		$op : OrderedProduct(product.price >= 10) 
+	then
+		logger.log("Updating prices which are too big");
+		$op.getProduct().setPrice(0);
+		update($op);
+	end
+
+// https://docs.jboss.org/drools/release/6.2.0.Final/drools-docs/html/ch07.html#d0e7561
