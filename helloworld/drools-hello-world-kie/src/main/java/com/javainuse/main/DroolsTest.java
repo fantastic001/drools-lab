@@ -37,7 +37,11 @@ public class DroolsTest {
 			fact1 = kSession.insert(order);
 
 			System.out.println("Firing rules");
+			kSession.getAgenda().getAgendaGroup( "billing").setFocus();
+			kSession.getAgenda().getAgendaGroup( "discounting").setFocus();
+			kSession.getAgenda().getAgendaGroup( "preprocessing").setFocus();
 			kSession.fireAllRules();
+
 
 
 		} catch (Throwable t) {

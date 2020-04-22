@@ -3,12 +3,14 @@ package rules
 import com.javainuse.model.Product
 import com.javainuse.model.OrderedProduct
 import com.javainuse.model.Order
+import com.javainuse.model.Bill
 
 import com.javainuse.main.Logger
 
 global Logger logger;
 
 rule "Offer for orders with total amount more than $10"
+	agenda-group "discounting"
 	when 
 		$o : Order()
 		$total : Number(doubleValue > 10) from 
@@ -24,12 +26,30 @@ rule "Offer for orders with total amount more than $10"
 	end
 
 rule "Change prices of all products above certain price"
+	agenda-group "discounting"
 	when 
 		$op : OrderedProduct(product.price >= 10) 
 	then
 		logger.log("Updating prices which are too big");
 		$op.getProduct().setPrice(0);
 		update($op);
+	end
+
+rule "Preprocessing orders"
+	agenda-group "preprocessing"
+	when 
+		$o : Order() 
+	then
+		logger.log("Ordering... ");
+	end
+
+rule "Making bill" 
+	agenda-group "billing"
+	when 
+		$o : Order()
+	then 
+		logger.log("Making bill");
+		insert(new Bill($o));
 	end
 
 // https://docs.jboss.org/drools/release/6.2.0.Final/drools-docs/html/ch07.html#d0e7561
