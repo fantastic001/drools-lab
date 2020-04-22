@@ -5,9 +5,19 @@ import com.javainuse.model.OrderedProduct
 import com.javainuse.model.Order
 import com.javainuse.model.Bill
 
+import java.util.Collection;
+
 import com.javainuse.main.Logger
 
 global Logger logger;
+
+declare trait ProcessedOrder
+	discount : double 
+	items : Collection
+end
+
+declare trait BilledOrder extends ProcessedOrder 
+end 
 
 rule "Offer for orders with total amount more than $10"
 	agenda-group "discounting"
@@ -41,6 +51,7 @@ rule "Preprocessing orders"
 		$o : Order() 
 	then
 		logger.log("Ordering... ");
+		don($o, ProcessedOrder.class);
 	end
 
 rule "Making bill" 
@@ -49,7 +60,15 @@ rule "Making bill"
 		$o : Order()
 	then 
 		logger.log("Making bill");
+		don($o, BilledOrder.class);
 		insert(new Bill($o));
 	end
 
+rule "Finalizing bill"
+	agenda-group "billing"
+	when 
+		$o : BilledOrder()
+	then 
+		logger.log("Finalizing bill");
+	end
 // https://docs.jboss.org/drools/release/6.2.0.Final/drools-docs/html/ch07.html#d0e7561

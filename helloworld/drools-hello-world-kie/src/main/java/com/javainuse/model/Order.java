@@ -1,10 +1,12 @@
 package com.javainuse.model;
 
 import java.util.ArrayList;
+import org.drools.core.factmodel.traits.Traitable;
+
 
 import com.javainuse.model.OrderedProduct;
 
-
+@Traitable
 public class Order {
     private ArrayList<OrderedProduct> items;
     private double discount; 
