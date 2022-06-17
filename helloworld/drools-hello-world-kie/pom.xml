@@ -4,7 +4,7 @@
   <artifactId>drools-hello-world</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 <properties>
-      <runtime.version>7.15.0.Final</runtime.version>
+      <runtime.version>7.60.0.Final</runtime.version>
 </properties>
 <dependencies>
       <dependency>
